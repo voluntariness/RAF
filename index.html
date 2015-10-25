@@ -17,15 +17,18 @@
     <script src="src/js/RAF.js" ></script>
     <script>
 
-        var seconds = 1000;
+        var ms = 1000;
         var width = 500;
 
         var div = document.getElementById('box');
 
         RAF(function(time) {
-            var value = 1 - Math.cos( time.progress * Math.PI / 2 );
-            div.style.width = (width * time.progress) + 'px';
-        }, seconds, 'easeOut');
+            if (time.total < ms) {
+                var value = time.total / ms;
+                div.style.width = (width * value) + 'px';
+                return true;
+            }
+        });
 
     </script>
 

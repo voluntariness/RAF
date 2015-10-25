@@ -36,14 +36,14 @@
     }
 
     
-    var _raf = function(callback, seconds, easing) {
+    var _raf = function(callback, ms, easing) {
         
         var _start = null;
         var _last = null;
         var _total = null;
         var _progress = 0;
 
-        seconds = parseInt(seconds, 10) || 0;
+        ms = parseInt(ms, 10) || 0;
         easing = easing || 'linear';
 
         var _run = function(timestamp) {
@@ -54,9 +54,9 @@
             
             _total = timestamp - _start;
             
-            if (seconds) {
+            if (ms) {
                 _progress = _easings[easing](
-                    (_total >= seconds)? 1 : (_total / seconds)
+                    (_total >= ms)? 1 : (_total / ms)
                 );
             }
 
@@ -68,7 +68,7 @@
                 delta: timestamp - _last,
                 progress: _progress
             });
-            if (result === true || _progress < 1) {
+            if (result === true && _progress < 1) {
                 _last = timestamp;
                 window.requestAnimationFrame(_run);
             }
